@@ -1,5 +1,5 @@
 import { AppBar, Avatar } from "@mui/material";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
@@ -40,9 +40,6 @@ const Header = () => {
 
   return (
     <>
-      <h1>Header</h1>
-      <Avatar alt={session?.user?.name as string} src={userProfileImg} />
-
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -76,6 +73,7 @@ const Header = () => {
               >
                 <MenuIcon />
               </IconButton>
+
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorElNav}
@@ -101,7 +99,9 @@ const Header = () => {
                 ))}
               </Menu>
             </Box>
+
             <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+
             <Typography
               variant="h5"
               noWrap
@@ -120,6 +120,7 @@ const Header = () => {
             >
               LOGO
             </Typography>
+
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
                 <Button
@@ -132,12 +133,17 @@ const Header = () => {
               ))}
             </Box>
 
+            <Box sx={{ paddingRight: 5 }}>
+              <Typography>Signed in as {session?.user?.email}</Typography>
+            </Box>
+            
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title="Open profile settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt={session?.user?.name as string} src={userProfileImg} />
                 </IconButton>
               </Tooltip>
+
               <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"
@@ -154,11 +160,9 @@ const Header = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem onClick={() => session ? signOut() : signIn()}>
+                  <Typography textAlign="center">{session ? 'Logout' : 'Login'}</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>
