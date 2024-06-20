@@ -5,8 +5,8 @@ const SideMenu = () => {
     <>
       <ul>
         <li>Analytics</li>
-        <li>Setting</li>
         <li>Profile</li>
+        <li>Settings</li>
       </ul>
     </>
   );

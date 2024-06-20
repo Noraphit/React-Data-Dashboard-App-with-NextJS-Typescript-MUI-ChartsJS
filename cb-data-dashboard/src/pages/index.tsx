@@ -1,7 +1,6 @@
 import Dashboard from "./dashboard/index";
 import Header from "../components/Header";
 import SideMenu from "../components/SideMenu";
-import styles from '@/styles/Home.module.css'
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Login from "@/components/Login";
@@ -18,14 +17,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main>
         <Header />
-        {session && (
-          <>
-            <SideMenu />
-            <Dashboard />
-          </>
-        )}
+        <SideMenu />
+        <Dashboard />
         <Login />
       </main>
     </>
