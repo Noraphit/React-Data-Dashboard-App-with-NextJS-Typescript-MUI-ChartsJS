@@ -20,7 +20,6 @@ const Home: React.FC = () => {
       </Head>
 
       <main className={scss.main}>
-        <Header />
         <SideMenu />
         <Dashboard />
         <Login />
