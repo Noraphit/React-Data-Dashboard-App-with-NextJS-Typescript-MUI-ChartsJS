@@ -1,4 +1,4 @@
-import { AppBar, Avatar } from "@mui/material";
+import { AppBar, Avatar, useMediaQuery } from "@mui/material";
 import { signIn, signOut, useSession } from "next-auth/react";
 import * as React from "react";
 import Container from '@mui/material/Container';
@@ -42,6 +42,8 @@ const Header = (props: HeaderProps) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const tabletCheck = useMediaQuery('(min-width: 768px)');
 
   return (
     <>
@@ -138,9 +140,11 @@ const Header = (props: HeaderProps) => {
               ))}
             </Box>
 
-            <Box sx={{ paddingRight: 5 }}>
-              <Typography>Signed in as {session?.user?.email}</Typography>
-            </Box>
+            {tabletCheck && (
+                <Box sx={{ paddingRight: 5 }}>
+                  <Typography>Signed in as {session?.user?.email}</Typography>
+                </Box>
+            )}
 
             <ThemeToggleButton ColorModeContext={ColorModeContext} />
 
