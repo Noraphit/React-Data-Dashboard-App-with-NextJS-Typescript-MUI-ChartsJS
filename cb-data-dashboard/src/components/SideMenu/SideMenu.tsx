@@ -17,6 +17,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import Person2Icon from '@mui/icons-material/Person2';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
+import NextLink from "next/link";
+import { signOut } from 'next-auth/react';
 
 const drawerWidth = 240;
 
@@ -59,6 +61,11 @@ const SideMenu = () => {
     setOpen(!open);
   };
 
+  const handleListItemButtonClick = (text: string) => {
+    text === "Sign Out" ? signOut() : null;
+    setOpen(false);
+  };
+
   return (
     <>
       <Drawer variant="permanent" anchor="left" open={open} sx={{
@@ -91,24 +98,37 @@ const SideMenu = () => {
         <List>
           {menuListTranslations.map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
+              <NextLink
+                className={scss.link}
+                href={`/dashboard/${menuRouteList[index]}`}
               >
-                <ListItemIcon
+                <ListItemButton
+                  onClick={() => handleListItemButtonClick(text)}
+                  title={text}
+                  aria-label={text}
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
                 >
-                  {menuListIcons[index]}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {menuListIcons[index]}
+                  </ListItemIcon>
+                  <ListItemText primary={text}
+                    sx={{
+                      color: theme.palette.text.primary,
+                      opacity: open ? 1 : 0
+                    }}
+                  />{" "}
+                </ListItemButton>
+              </NextLink>
             </ListItem>
           ))}
         </List>
