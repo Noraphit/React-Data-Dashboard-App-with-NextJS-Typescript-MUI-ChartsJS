@@ -10,8 +10,8 @@ const Home: React.FC = () => {
   return (
     <>
       <main className={scss.main}>
-        {!session && <Dashboard />}
-        {!session && <Login />}
+        <Dashboard />
+        <Login />
       </main>
     </>
   );

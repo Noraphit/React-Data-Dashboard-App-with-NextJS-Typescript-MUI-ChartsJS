@@ -19,7 +19,7 @@ const Layout = (props: any) => {
       </Head>
 
       <main className={scss.layout}>
-        {!session && <SideMenu />}
+        <SideMenu />
         {props.children}
       </main>
     </>
